@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gestioncajeros_servidor;
 
-import com.gestioncajeros_servidor.connection.ConnectionUtils;
+import com.gestioncajeros_servidor.server.Server;
+import com.gestioncajeros_servidor.server.ServerThread;
 
-/**
- *
- * @author anton
- */
 public class ServidorCajeros {
     public static void main(String[] args) {
-        System.out.println(ConnectionUtils.getConnection());
+        Server.init();
     }
 }

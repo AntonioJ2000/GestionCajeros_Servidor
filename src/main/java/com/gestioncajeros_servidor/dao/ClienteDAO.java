@@ -21,38 +21,37 @@ import com.gestioncajeros_servidor.model.*;
  * @author anton
  */
 public class ClienteDAO {
+
     private enum toSQL {
         CREATE("INSERT into cliente (nombre, apellidos, dni, login, password, fecha_nac, telefono, email) VALUES (?,?,?,?,?,?,?,?))"),
         GETALL("SELECT * FROM cliente"),
         GETBYID("SELECT * FROM cliente WHERE codigoCliente = ?"),
         DELETEBYID("DELETE FROM cliente where codigoCliente = ?"),
-        UPDATEBYID("UPDATE cliente SET nombre = ?, apellidos = ?, dni = ?, login = ?, password = ?, fecha_nac = ?, telefono = ?, email = ? WHERE id = ?");
-        
-        
-        
+        UPDATEBYID("UPDATE cliente SET nombre = ?, apellidos = ?, dni = ?, login = ?, password = ?, fecha_nac = ?, telefono = ?, email = ? WHERE id = ?"),
+        EXISTS("SELECT * FROM cliente WHERE login = ? AND password = ?");
+
         private String value;
-    
-        toSQL(String s){
+
+        toSQL(String s) {
             value = s;
         }
 
-        public String toString(){
+        public String toString() {
             return value;
         }
-        
+
     }
-    
+
     private Convert convert;
-    
+
     private Connection con;
-    
-    
+
     public ClienteDAO() {
         con = ConnectionUtils.getConnection();
         this.convert = new Convert();
     }
-    
-        public void createClient(Cliente c) {
+
+    public void createClient(Cliente c) {
         PreparedStatement ps = null;
 
         try {
@@ -82,7 +81,7 @@ public class ClienteDAO {
             }
         }
     }
-        
+
     public List<Cliente> getAllClients() {
         List<Cliente> list = new ArrayList<>();
         Cliente c = null;
@@ -119,8 +118,8 @@ public class ClienteDAO {
 
         return list;
     }
-    
-     public Cliente getClientByID(int codigoCliente) {
+
+    public Cliente getClientByID(int codigoCliente) {
         Cliente c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -156,8 +155,46 @@ public class ClienteDAO {
 
         return c;
     }
-    
-     public void deleteClientByID(int codigoCliente) {
+
+    public Cliente getClient(String login, String password) {
+        Cliente c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(toSQL.EXISTS.toString());
+
+            ps.setString(1, login);
+            ps.setString(2, password);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                c = convert.convertirCliente(rs);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+        return c;
+    }
+
+    public void deleteClientByID(int codigoCliente) {
         PreparedStatement ps = null;
 
         try {
@@ -180,7 +217,7 @@ public class ClienteDAO {
             }
         }
     }
-     
+
     public void updateUser(Cliente c) {
         PreparedStatement ps = null;
 

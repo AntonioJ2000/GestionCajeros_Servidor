@@ -17,7 +17,8 @@ public class OperariosDAO {
         GETALL("SELECT * FROM operarios"),
         GETBYID("SELECT * FROM operarios WHERE codigoOperario = ?"),
         DELETEBYID("DELETE FROM operarios WHERE codigoOperario = ?"),
-        UPDATEBYID("UPDATE operarios SET nombre = ?, apellidos = ?, login = ?, password = ? WHERE codigoOperario = ?");
+        UPDATEBYID("UPDATE operarios SET nombre = ?, apellidos = ?, login = ?, password = ? WHERE codigoOperario = ?"),
+        EXISTS("SELECT * FROM operarios WHERE login = ? AND password = ?");
 
         private String value;
 
@@ -137,6 +138,44 @@ public class OperariosDAO {
                 }
             }
         }
+    }
+    
+     public Operarios getOperario(String login, String password) {
+        Operarios o = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(toSQL.EXISTS.toString());
+
+            ps.setString(1, login);
+            ps.setString(2, password);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                o = convert.convertirOperarios(rs);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+        return o;
     }
 
     public void deleteOperatorById(int codigoOperario) {

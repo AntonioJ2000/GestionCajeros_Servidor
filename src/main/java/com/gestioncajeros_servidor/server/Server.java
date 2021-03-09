@@ -1,5 +1,6 @@
 package com.gestioncajeros_servidor.server;
 
+import com.gestioncajeros_servidor.gescon.Gescon;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,6 +19,7 @@ public class Server {
                 Socket socket;
                 socket = server.accept();
                 System.out.println("Nueva conexión entrante: "+socket);
+                ((Gescon) new Gescon(socket, idSession)).start();
                 idSession++;
             }
         }catch(IOException ex){
