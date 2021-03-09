@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import servidorcajeros.dao.utils.Convert;
+import com.servidorcajeros_servidor.dao.utils.Convert;
 import com.gestioncajeros_servidor.connection.ConnectionUtils;
 import com.gestioncajeros_servidor.model.*;
 

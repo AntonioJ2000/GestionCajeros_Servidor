@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servidorcajeros.dao.utils;
+package com.servidorcajeros_servidor.dao.utils;
 
 import java.sql.Date;
 import java.sql.ResultSet;

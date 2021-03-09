@@ -5,12 +5,14 @@
  */
 package com.gestioncajeros_servidor;
 
+import com.gestioncajeros_servidor.connection.ConnectionUtils;
+
 /**
  *
  * @author anton
  */
 public class ServidorCajeros {
     public static void main(String[] args) {
-        
+        System.out.println(ConnectionUtils.getConnection());
     }
 }
