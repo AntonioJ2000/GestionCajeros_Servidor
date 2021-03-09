@@ -19,7 +19,7 @@ public class ServerThread extends Thread {
     @Override
     public void run() {
         try {
-            socket = new Socket("192.168.18.7", 24242);
+            socket = new Socket("127.0.0.1", 24242);
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
             System.out.println(id);
