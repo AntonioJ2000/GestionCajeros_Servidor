@@ -12,15 +12,23 @@ import java.time.LocalDateTime;
  * @author anton
  */
 public class Cuenta {
-     private int codigoCuenta;
+
+    private int codigoCuenta;
     private double saldo;
     private LocalDateTime fechaHoraCreacion;
     private LocalDateTime fechaHoraUltimaModificacion;
 
-    public Cuenta() {}
+    public Cuenta() {
+    }
 
     public Cuenta(int codigoCuenta, double saldo, LocalDateTime fechaHoraCreacion, LocalDateTime fechaHoraUltimaModificacion) {
         this.codigoCuenta = codigoCuenta;
+        this.saldo = saldo;
+        this.fechaHoraCreacion = fechaHoraCreacion;
+        this.fechaHoraUltimaModificacion = fechaHoraUltimaModificacion;
+    }
+
+    public Cuenta(double saldo, LocalDateTime fechaHoraCreacion, LocalDateTime fechaHoraUltimaModificacion) {
         this.saldo = saldo;
         this.fechaHoraCreacion = fechaHoraCreacion;
         this.fechaHoraUltimaModificacion = fechaHoraUltimaModificacion;
@@ -57,13 +65,13 @@ public class Cuenta {
     public void setFechaHoraUltimaModificacion(LocalDateTime fechaHoraUltimaModificacion) {
         this.fechaHoraUltimaModificacion = fechaHoraUltimaModificacion;
     }
-    
+
     @Override
     public String toString() {
         String cadena = "";
-        return "\n------ ID: "+codigoCuenta+" ------\nSaldo: "+saldo
-                +"\nFecha y hora de creacion: "+fechaHoraCreacion
-                +"\nFecha y hora de la ultima modificacion: "+fechaHoraUltimaModificacion;
+        return "\n------ ID: " + codigoCuenta + " ------\nSaldo: " + saldo
+                + "\nFecha y hora de creacion: " + fechaHoraCreacion
+                + "\nFecha y hora de la ultima modificacion: " + fechaHoraUltimaModificacion;
     }
-    
+
 }

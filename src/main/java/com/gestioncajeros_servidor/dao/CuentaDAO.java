@@ -28,7 +28,11 @@ public class CuentaDAO {
         GETALL("SELECT * FROM cuenta"),
         GETBYID("SELECT * FROM cuenta WHERE codigoCuenta = ?"),
         DELETEBYID("DELETE FROM cuenta WHERE codigoCuenta = ?"),
-        UPDATEBYID("UPDATE cuenta SET saldo = ?, fechaHoraCreacion = ?, fechaHoraUltimaModificacion = ? WHERE codigoCuenta = ?");
+        UPDATEBYID("UPDATE cuenta SET saldo = ?, fechaHoraCreacion = ?, fechaHoraUltimaModificacion = ? WHERE codigoCuenta = ?"),
+        GETACCOUNT("SELECT c.* FROM cuenta AS c "
+                + "INNER JOIN cliente_cuenta AS cc ON c.codigoCuenta = cc.codigoCuenta "
+                + "INNER JOIN cliente AS cl ON cc.codigoCliente = cl.codigoCliente "
+                + "WHERE cl.codigoCliente = ?");
 
         private String value;
 
@@ -123,6 +127,43 @@ public class CuentaDAO {
         }
 
         return c;
+    }
+    
+    public Cuenta getAccountFromClient(int codigoCliente) {
+        Cuenta cuenta = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(toSQL.GETACCOUNT.toString());
+
+            ps.setInt(1, codigoCliente);
+
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cuenta = convert.convertirCuenta(rs);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
+        return cuenta;
     }
     
     public int insertAccount(Cuenta cuenta){

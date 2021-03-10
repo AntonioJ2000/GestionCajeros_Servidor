@@ -37,6 +37,17 @@ public class Cliente {
         this.email = email;
     }
     
+    public Cliente(String nombre, String apellidos, String dni, String login, String password, java.sql.Date fecha_nac, String telefono, String email) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.dni = dni;
+        this.login = login;
+        this.password = password;
+        this.fecha_nac = fecha_nac;
+        this.telefono = telefono;
+        this.email = email;
+    }
+    
     public Cliente(Cliente cliente, Cuenta cuenta, int numeroEjercicio) {
         this.codigoCliente = cliente.getCodigoCliente();
         this.nombre = cliente.getNombre();
