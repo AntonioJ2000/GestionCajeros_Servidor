@@ -208,7 +208,6 @@ public class Gescon extends Thread {
                 String password = dis.readUTF();
                 Date d = Date.valueOf(fecha_nac);
                 Cliente cl = new Cliente(nombre, apellidos, dni, log, password, d, telefono, email);
-                System.out.println(cl);
                 this.clDAO.createClient(cl);
                 break;
             case 2:

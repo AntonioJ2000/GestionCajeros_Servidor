@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gestioncajeros_servidor.dao;
 
 import java.sql.Connection;
@@ -16,14 +11,10 @@ import com.servidorcajeros_servidor.dao.utils.Convert;
 import com.gestioncajeros_servidor.connection.ConnectionUtils;
 import com.gestioncajeros_servidor.model.*;
 
-/**
- *
- * @author anton
- */
 public class ClienteDAO {
 
     private enum toSQL {
-        CREATE("INSERT into cliente (nombre, apellidos, dni, login, password, fecha_nac, telefono, email) VALUES (?,?,?,?,?,?,?,?))"),
+        CREATE("INSERT INTO cliente (nombre, apellidos, dni, login, password, fecha_nac, telefono, email) VALUES (?,?,?,?,?,?,?,?)"),
         GETALL("SELECT * FROM cliente"),
         GETBYID("SELECT * FROM cliente WHERE codigoCliente = ?"),
         DELETEBYID("DELETE FROM cliente where codigoCliente = ?"),
